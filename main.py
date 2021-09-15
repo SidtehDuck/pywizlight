@@ -1,8 +1,8 @@
 import asyncio
+import time
 from random import randint
 from threading import Event
-import time
-import itertools
+from itertools import count
 from pywizlight import wizlight, PilotBuilder, discovery
 
 async def main():
@@ -48,9 +48,9 @@ async def main():
     def colored(r, g, b, text):
         return "\033[38;2;{};{};{}m{} \033[38;2;255;255;255m".format(r, g, b, text)
   
-  
+
     # Set RGB values and print em on console
-    for i in itertools.count():
+    for i in count():
         r, g, b, a = rgbUpdate()
         await light.turn_on(PilotBuilder(rgb = (r, g, b), brightness = a))
         state = await light.updateState()
