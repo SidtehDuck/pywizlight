@@ -55,7 +55,7 @@ async def main():
         await light.turn_on(PilotBuilder(rgb = (r, g, b), brightness = a))
         state = await light.updateState()
         red, green, blue = state.get_rgb()
-        text = (f"red {red}, green {green}, blue {blue}, brightness {a}")
+        text = (f"Red {red}, Green {green}, Blue {blue}, Brightness {a}")
         colored_text = colored(red, green, blue, text)
         print(colored_text)
         time.sleep(0.1)
