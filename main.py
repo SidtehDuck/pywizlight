@@ -6,10 +6,12 @@ from itertools import count
 from pywizlight import wizlight, PilotBuilder, discovery
 
 async def main():
+    bulbs = await discovery.discover_lights(broadcast_space="192.168.1.255")
+    print(f"Bulb IP address: {bulbs}")
     '''Sample code to work with bulbs.
     # Discover all bulbs in the network via broadcast datagram (UDP)
     # function takes the discovery object and returns a list with wizlight objects.
-    #bulbs = await discovery.discover_lights(broadcast_space="192.168.1.255")
+    
     # Print the IP address of the bulb on index 0
     #print(f"Bulb IP address: {bulbs[0].ip}")
 
@@ -36,7 +38,7 @@ async def main():
 
     # Function to generate randomg colours
     def rgbUpdate():
-        r, g, b, a = (randint(0,255), randint(0,255), randint(0,255), randint(0,255))
+        r, g, b, a = (randint(0,100), randint(0,100), randint(0,255), randint(0,255))
         return r, g, b, a
 
     # Set up a standard light
@@ -52,13 +54,13 @@ async def main():
     # Set RGB values and print em on console
     for i in count():
         r, g, b, a = rgbUpdate()
-        await light.turn_on(PilotBuilder(rgb = (r, g, b), brightness = a))
+        await light.turn_on(PilotBuilder(rgb = (r, g, b), brightness = 255))
         state = await light.updateState()
         red, green, blue = state.get_rgb()
         text = (f"Red {red}, Green {green}, Blue {blue}, Brightness {a}")
         colored_text = colored(red, green, blue, text)
         print(colored_text)
-        time.sleep(0.1)
+        time.sleep(2)
 
     # Turn off the light
     #await light.turn_off()
