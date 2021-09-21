@@ -5,9 +5,9 @@ from threading import Event
 from itertools import count
 from pywizlight import wizlight, PilotBuilder, discovery
 
-async def main():
-    bulbs = await discovery.discover_lights(broadcast_space="192.168.1.255")
-    print(f"Bulb IP address: {bulbs}")
+def redundant():
+    #bulbs = await discovery.discover_lights(broadcast_space="192.168.1.255")
+    #print(f"Bulb IP address: {bulbs}")
     '''Sample code to work with bulbs.
     # Discover all bulbs in the network via broadcast datagram (UDP)
     # function takes the discovery object and returns a list with wizlight objects.
@@ -36,9 +36,11 @@ async def main():
         await bulb.turn_off()
     '''
 
+async def main():
+
     # Function to generate randomg colours
     def rgbUpdate():
-        r, g, b, a = (randint(0,100), randint(0,100), randint(0,255), randint(0,255))
+        r, g, b, a = (randint(0,255), randint(0,255), randint(0,255), randint(0,255))
         return r, g, b, a
 
     # Set up a standard light
@@ -54,7 +56,7 @@ async def main():
     # Set RGB values and print em on console
     for i in count():
         r, g, b, a = rgbUpdate()
-        await light.turn_on(PilotBuilder(rgb = (r, g, b), brightness = 255))
+        await light.turn_on(PilotBuilder(rgb = (255, 0, 255), brightness = 255))
         state = await light.updateState()
         red, green, blue = state.get_rgb()
         text = (f"Red {red}, Green {green}, Blue {blue}, Brightness {a}")
